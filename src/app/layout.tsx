@@ -1,6 +1,12 @@
 import "~/styles/globals.css";
 
-import { ClerkProvider, Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  Show,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 

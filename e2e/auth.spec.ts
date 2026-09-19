@@ -35,7 +35,7 @@ test("sign up", async ({ page }) => {
 
   const verificationResponse = page.waitForResponse(
     (resp) =>
-      resp.url().includes("prepare_verification") && resp.status() === 200
+      resp.url().includes("prepare_verification") && resp.status() === 200,
   );
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await verificationResponse;
