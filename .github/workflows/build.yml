@@ -46,6 +46,8 @@ jobs:
         run: pnpm format:check
 
       - name: Run lint
+        env:
+          SKIP_ENV_VALIDATION: "1"
         run: pnpm lint
 
       - name: Run typecheck
