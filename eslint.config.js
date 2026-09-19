@@ -46,6 +46,12 @@ export default tseslint.config(
   },
   },
   {
+    files: ["src/test/setup.ts"],
+    rules: {
+      "@typescript-eslint/no-empty-function": "off",
+    },
+  },
+  {
 		linterOptions: {
 			reportUnusedDisableDirectives: true
 		},
