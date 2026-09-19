@@ -1,18 +1,9 @@
-/**
- * Idempotent data seeding (lookup/enum tables, not schema). Run with `pnpm db:seed`.
- * Safe to re-run: every insert uses onConflictDoNothing/onConflictDoUpdate.
- */
 import { getTableColumns, sql, type SQL } from "drizzle-orm";
 import type { PgTable } from "drizzle-orm/pg-core";
 
 import { db } from "~/server/db";
 import { problems } from "~/server/db/schema";
 
-/**
- * Builds a `set` clause that updates every column except the ones given
- * (typically the conflict target and `id`), so a seed upsert stays correct
- * as columns are added without needing to list them out by hand.
- */
 function allColumnsExcept<T extends PgTable>(
   table: T,
   exclude: (keyof T["_"]["columns"])[]
@@ -26,7 +17,6 @@ function allColumnsExcept<T extends PgTable>(
 }
 
 async function main() {
-  // Keyed by slug: re-running with edited fields updates the existing row.
   await db
     .insert(problems)
     .values([{ title: "Hello or Goodbye", slug: "hello-or-goodbye" }])

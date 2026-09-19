@@ -4,10 +4,6 @@ import { db } from "~/server/db";
 import { featureFlags } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
 
-/**
- * Missing flag defaults to disabled — the safe default for a kill-switch:
- * an unseeded/mistyped key never accidentally turns a feature on.
- */
 export async function isFeatureEnabled(key: string): Promise<boolean> {
   const flag = await db.query.featureFlags.findFirst({
     where: eq(featureFlags.key, key),

@@ -40,6 +40,8 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@clerk/backend": "^3.18.1",
+    "@clerk/testing": "^2.2.36",
     "@eslint/eslintrc": "^3.3.1",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4.0.15",
