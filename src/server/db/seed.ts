@@ -3,20 +3,13 @@
  * Safe to re-run: every insert uses onConflictDoNothing/onConflictDoUpdate.
  */
 import { db } from "~/server/db";
-// import { statuses } from "~/server/db/schema";
+import { problems } from "~/server/db/schema";
 
 async function main() {
-  // Example pattern for a lookup table backing an "enum" that the app can
-  // extend without a migration:
-  //
-  // await db
-  //   .insert(statuses)
-  //   .values([
-  //     { id: "draft", label: "Draft" },
-  //     { id: "published", label: "Published" },
-  //     { id: "archived", label: "Archived" },
-  //   ])
-  //   .onConflictDoNothing();
+  await db
+    .insert(problems)
+    .values([{ title: "Hello or Goodbye", slug: "hello-or-goodbye" }])
+    .onConflictDoNothing();
 
   console.log("Seed complete");
 }
