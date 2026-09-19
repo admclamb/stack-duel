@@ -9,11 +9,35 @@ We try to keep this project as simple as possible, so you can start with just th
 If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
 - [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
+- [Clerk](https://clerk.com)
 - [Drizzle](https://orm.drizzle.team)
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
+
+## Local Development
+
+1. Copy `.env.example` to `.env` and fill in the values (Clerk keys come from your Clerk dashboard — see below for webhooks).
+2. Start the local database: `./start-database.sh`
+3. Apply the schema: `pnpm db:push`
+4. `pnpm dev`
+
+### Clerk webhooks locally
+
+The app syncs Clerk users into the local `users` table via a webhook at `/api/webhooks/clerk`. Since Clerk needs a public URL to deliver to, use the Clerk CLI's local relay instead of exposing `localhost` yourself:
+
+```bash
+clerk webhooks listen --forward-to http://localhost:3000/api/webhooks/clerk
+```
+
+This prints a relay URL — register it as a webhook endpoint in the Clerk dashboard (on the **development** instance), subscribed to `user.created`, `user.updated`, and `user.deleted`. Keep `clerk webhooks listen` running alongside `pnpm dev` to receive and verify real events while you work.
+
+To pin the relay URL so it doesn't change across restarts:
+
+```bash
+clerk webhooks listen --token "$(clerk webhooks token)" --forward-to http://localhost:3000/api/webhooks/clerk
+```
+
+This is separate from the production webhook endpoint (`https://stackduel.dev/api/webhooks/clerk`), which is registered once against the Clerk production instance.
 
 ## Learn More
 
