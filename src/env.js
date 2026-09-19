@@ -13,7 +13,7 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     CLERK_SECRET_KEY: z.string(),
-    CLERK_WEBHOOK_SIGNING_SECRET: z.string(),
+    CLERK_WEBHOOK_SIGNING_SECRET: z.string().optional(),
   },
 
   /**
