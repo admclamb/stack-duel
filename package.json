@@ -19,7 +19,7 @@
     "preview": "next build && next start",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "vercel-build": "drizzle-kit migrate && next build"
+    "vercel-build": "drizzle-kit migrate && tsx src/server/db/seed.ts && next build"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.12.0",
