@@ -1,9 +1,25 @@
+import type { Metadata } from "next";
+import Hero from "~/components/landing/hero";
+import DuelDemoSection from "~/components/landing/duel-demo-section";
+import FeaturesSection from "~/components/landing/features-section";
+import FaqSection from "~/components/landing/faq-section";
+import CtaSection from "~/components/landing/cta-section";
+import SiteLayout from "~/components/layout/site-layout";
+import { siteName } from "~/lib/site";
+
+export const metadata: Metadata = {
+  title: { absolute: `${siteName} — Real-Time Coding Duels & DSA Practice` },
+  alternates: { canonical: "/" },
+};
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-        Hello World 10
-      </h1>
-    </main>
+    <SiteLayout>
+      <Hero />
+      <DuelDemoSection />
+      <FeaturesSection />
+      <FaqSection />
+      <CtaSection />
+    </SiteLayout>
   );
 }
