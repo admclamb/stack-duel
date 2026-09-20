@@ -6,11 +6,14 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
+import { auth } from "@clerk/nextjs/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
+import { getCurrentAppUser } from "~/server/auth/current-user";
+import type { Permission } from "~/lib/permissions";
 
 /**
  * 1. CONTEXT
@@ -25,8 +28,11 @@ import { db } from "~/server/db";
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
+  const session = await auth();
+
   return {
     db,
+    auth: session,
     ...opts,
   };
 };
@@ -104,3 +110,34 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+/**
+ * Protected (authenticated) procedure
+ *
+ * Requires a signed-in Clerk session. Throws UNAUTHORIZED otherwise.
+ */
+export const protectedProcedure = publicProcedure.use(({ ctx, next }) => {
+  if (!ctx.auth.userId) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  return next({ ctx: { ...ctx, auth: { ...ctx.auth, userId: ctx.auth.userId } } });
+});
+
+/**
+ * Permission-requiring procedure factory
+ *
+ * Requires a signed-in user with the given permission (computed from their app-level groups).
+ * Each admin router picks the specific permission its procedures need, rather than one blanket
+ * "isAdmin" check.
+ */
+export function procedureRequiringPermission(permission: Permission) {
+  return protectedProcedure.use(async ({ ctx, next }) => {
+    const user = await getCurrentAppUser();
+    if (!user?.permissions.includes(permission)) {
+      throw new TRPCError({ code: "FORBIDDEN" });
+    }
+
+    return next({ ctx: { ...ctx, user } });
+  });
+}

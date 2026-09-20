@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1789792016982,
-      "tag": "0000_tough_piledriver",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1789844757358,
-      "tag": "0001_rapid_mikhail_rasputin",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1789844993807,
-      "tag": "0002_woozy_prodigy",
+      "when": 1789922345277,
+      "tag": "0000_flat_morgan_stark",
       "breakpoints": true
     }
   ]

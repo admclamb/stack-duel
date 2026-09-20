@@ -16,3 +16,7 @@ const conn = globalForDb.conn ?? postgres(env.DATABASE_URL);
 if (env.NODE_ENV !== "production") globalForDb.conn = conn;
 
 export const db = drizzle(conn, { schema });
+
+/** Closes the underlying connection pool. Only meant for standalone scripts (seed, one-off
+ * migrations) that need to exit cleanly — the Next.js app process never calls this. */
+export const closeDb = () => conn.end();

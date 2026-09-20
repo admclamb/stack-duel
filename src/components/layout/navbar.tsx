@@ -24,9 +24,9 @@ import { ModeToggle } from "~/components/mode-toggle";
 
 const defaultRoutes = [
   { name: "Home", href: "/" },
-  { name: "Problems", href: "/" },
+  { name: "Problems", href: "/problems" },
   { name: "Games", href: "/" },
-  { name: "Blog", href: "/" },
+  { name: "Blog", href: "/blog" },
 ];
 
 export default function Navbar() {

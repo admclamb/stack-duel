@@ -2,12 +2,12 @@ import Link from "next/link";
 import Logo from "~/components/logo";
 
 const platformLinks = [
-  { name: "Problems", href: "/" },
+  { name: "Problems", href: "/problems" },
   { name: "Games", href: "/" },
   { name: "Dashboard", href: "/" },
 ];
 
-const accountLinks = [{ name: "Profile Settings", href: "/" }];
+const accountLinks = [{ name: "Profile Settings", href: "/settings" }];
 
 export default function Footer() {
   return (
